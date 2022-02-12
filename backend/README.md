@@ -1,9 +1,7 @@
 # Instalar pacotes
 ``npm install``
 
-# DB
 
-``npx knex init``
 ## Configurar DB
 
 ## Configurar Env Oracle Autonomous Database

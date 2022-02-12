@@ -1,19 +1,18 @@
 const { validationResult } = require('express-validator');
+const { apiKeys } = require('../../api-keys.json');
 
 module.exports = {
-  problemIndexValidation(req, res, next) {
+  validateRequestSchema(req, res, next) {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      req.query.limit = 10;
-      req.query.page = 1;
+    if (errors.isEmpty()) {
+      return next();
     }
-    next();
+    return res.status(422).json(errors);
   },
-  problemSaveValidation(req, res, next) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json(errors);
+  checkApiKey(req, res, next) {
+    if (apiKeys.includes(req.headers.api_key)) {
+      return next();
     }
-    next();
+    return res.status(401).json({ error: 'API_KEY invalid.' });
   },
 };

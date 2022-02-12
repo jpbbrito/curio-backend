@@ -1,11 +1,13 @@
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
+const debug = require('debug')('log:');
 const { Database } = require('../database');
 
 module.exports = {
   async getAll(limit, page) {
+    debug('[problemRepository]->getAll() limit, page-> ', limit, page);
     try {
       const problems = await Database.connection
-        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'created_at')
+        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'created_at', 'updated_at')
         .from('problems')
         .where('status', '!=', 'deleted')
         .orderBy('created_at', 'desc')
@@ -21,7 +23,8 @@ module.exports = {
       description, address, longitude, latitude, reporterContact,
     },
   ) {
-    const uuid = await uuidv4();
+    const uuid = await randomUUID();
+    debug('[problemRepository]->save()  ', description, address, longitude, latitude, reporterContact, uuid);
     try {
       await Database.connection('problems')
         .insert({
@@ -39,9 +42,10 @@ module.exports = {
     }
   },
   async findByUUID(uuid) {
+    debug('[problemRepository]->findByUUID() uuid-> ', uuid);
     try {
       const problem = await Database.connection
-        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'created_at')
+        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'created_at', 'updated_at')
         .from('problems')
         .where({ uuid });
       if (problem.length === 0) {
@@ -53,11 +57,13 @@ module.exports = {
     }
   },
   async updateByUUID(uuid, description) {
+    debug('[problemRepository]->updateByUUID() uuid, description-> ', uuid, description);
     try {
       const result = await Database.connection('problems')
         .where('uuid', '=', uuid)
         .update({
           description,
+          updated_at: Database.connection.fn.now(),
         });
       if (result === 1) {
         return true;
@@ -68,11 +74,13 @@ module.exports = {
     }
   },
   async removeByUUID(uuid) {
+    debug('[problemRepository]->removeByUUID() uuid-> ', uuid);
     try {
       const result = await Database.connection('problems')
         .where('uuid', '=', uuid)
         .update({
           status: 'deleted',
+          updated_at: Database.connection.fn.now(),
         });
       if (result === 1) {
         return true;

@@ -1,4 +1,4 @@
-const debug = require('debug')('log');
+const debug = require('debug')('log:');
 const { init } = require('./src/database');
 const app = require('./src/server');
 

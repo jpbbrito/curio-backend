@@ -1,5 +1,3 @@
-const { onUpdateTrigger } = require('../../../knexfile');
-
 exports.up = async (knex) => {
   const exists = await knex.schema.hasTable('image_problem');
   if (!exists) {
@@ -7,10 +5,10 @@ exports.up = async (knex) => {
       table.increments('id').primary();
       table.uuid('uuid').notNullable();
       table.string('filename', 255).notNullable();
-      table.integer('problem_id').unsigned().notNullable();
-      table.foreign('problem_id').references('id').inTable('problems');
+      table.integer('fk_prob').unsigned().notNullable();
+      table.foreign('fk_prob').references('id').inTable('problems');
       table.timestamps(true, true);
-    }).then(knex.raw(onUpdateTrigger('image_problem')));
+    });
   }
 };
 

@@ -1,5 +1,3 @@
-const { onUpdateTrigger } = require('../../../knexfile');
-
 exports.up = async (knex) => {
   const exists = await knex.schema.hasTable('problems');
   if (!exists) {
@@ -13,7 +11,7 @@ exports.up = async (knex) => {
       table.string('reporter_contact');
       table.string('status').notNullable();
       table.timestamps(true, true);
-    }).then(knex.raw(onUpdateTrigger('problems')));
+    });
   }
 };
 
