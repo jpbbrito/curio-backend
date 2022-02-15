@@ -1,6 +1,5 @@
 node_modules/
 .env
-knexfile.js
 wallet/
 .env
 api-keys.json

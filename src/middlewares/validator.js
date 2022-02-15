@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { apiKeys } = require('../../api-keys.json');
+const { apiKeys } = require(process.env.PATH_API_KEYS);
 
 module.exports = {
   validateRequestSchema(req, res, next) {
