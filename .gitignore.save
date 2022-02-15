@@ -1,7 +1,7 @@
-backend/node_modules
+api-keys.jsonbackend/node_modules
 backend/dist
 backend/.env
 backend/knexfile.js
 backend/wallet
 backend/.env
-backend/api-keys.json
+backend/apiKeys.json
