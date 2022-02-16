@@ -1,23 +1,21 @@
-const knexfile = require('../../knexfile');
-// eslint-disable-next-line import/order
-const connection = require('knex')(knexfile[process.env.NODE_ENV]);
-
 class Database {
     static connection;
-
     constructor() {
-     }
-    setConnection(connection) {
-        Database.connection = connection;
+
     }
-    getConnection() {
-        return Database.connection
+    static async createConnection(knex, configuration) {
+        console.log(configuration)
+        try {
+            this.connection = await knex(configuration);
+            console.log('Database working');
+            return this.connection;
+        } catch (errors) {
+            console.log('Error to connect DB ->', errors);
+        }
+    }
+    static getConnection() {
+        return Database.connection;
     }
 }
 
-async function init() {
-    const database = new Database();
-    database.setConnection(connection);
-};
-
-module.exports = { Database, init };
+module.exports = Database;

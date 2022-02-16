@@ -1,5 +1,5 @@
 node_modules/
 .env
-wallet/
-.env
-api-keys.json
+.env.test
+.env.dev
+files/

@@ -1,10 +1,9 @@
 const { randomUUID } = require('crypto');
-const debug = require('debug')('log:');
-const { Database } = require('../database');
+const Database = require('../database');
 
 module.exports = {
   async getAll(limit, page) {
-    debug('[problemRepository]->getAll() limit, page-> ', limit, page);
+    console.log('[problemRepository]->getAll() limit, page-> ', limit, page);
     try {
       const problems = await Database.connection
         .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'created_at', 'updated_at')
@@ -24,7 +23,7 @@ module.exports = {
     },
   ) {
     const uuid = await randomUUID();
-    debug('[problemRepository]->save()  ', description, address, longitude, latitude, reporterContact, uuid);
+    console.log('[problemRepository]->save()  ', description, address, longitude, latitude, reporterContact, uuid);
     try {
       await Database.connection('problems')
         .insert({
@@ -42,7 +41,7 @@ module.exports = {
     }
   },
   async findByUUID(uuid) {
-    debug('[problemRepository]->findByUUID() uuid-> ', uuid);
+    console.log('[problemRepository]->findByUUID() uuid-> ', uuid);
     try {
       const problem = await Database.connection
         .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'created_at', 'updated_at')
@@ -57,7 +56,7 @@ module.exports = {
     }
   },
   async updateByUUID(uuid, description) {
-    debug('[problemRepository]->updateByUUID() uuid, description-> ', uuid, description);
+    console.log('[problemRepository]->updateByUUID() uuid, description-> ', uuid, description);
     try {
       const result = await Database.connection('problems')
         .where('uuid', '=', uuid)
@@ -74,7 +73,7 @@ module.exports = {
     }
   },
   async removeByUUID(uuid) {
-    debug('[problemRepository]->removeByUUID() uuid-> ', uuid);
+    console.log('[problemRepository]->removeByUUID() uuid-> ', uuid);
     try {
       const result = await Database.connection('problems')
         .where('uuid', '=', uuid)

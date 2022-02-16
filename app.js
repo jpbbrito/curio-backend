@@ -1,11 +1,16 @@
-const debug = require('debug')('log:');
-const { init } = require('./src/database');
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : process.env.NODE_ENV == 'development' ? '.env.dev' : '.env'
+});
+const knex = require('knex');
+const configuration = require('./knexfile');
+const Database = require('./src/database/index');
 const app = require('./src/server');
 
-init();
+async function start(){
+  await Database.createConnection(knex, configuration[process.env.NODE_ENV]);
+  app.listen(process.env.PORT, () => {
+      console.log('Server running on PORT 3000');
+  });
+}
 
-const PORT = 3000;
-
-app.listen(PORT, () => {
-  debug('Server running on PORT 3000');
-});
+start()

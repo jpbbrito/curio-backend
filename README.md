@@ -30,7 +30,7 @@ O Aplicativo está sendo construido com Ionic 5 com Capacitor. O sistema de mapa
 
 ## Configurar Env Oracle Autonomous Database
 
-``export TNS_ADMIN=$(pwd)/wallet``
+``export TNS_ADMIN=$(pwd)/files/wallet``
 
 ## Executar Migrations
 
