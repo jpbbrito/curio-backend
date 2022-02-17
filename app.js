@@ -1,11 +1,11 @@
 require('dotenv').config({
   path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env.dev'});
-console.log(process.env);
 const knex = require('knex');
 const configuration = require('./knexfile');
 const Database = require('./src/database/index');
 const app = require('./src/server');
 
+console.log('NODE_ENV:  ', Object.keys(process.env));
 async function start(){
   await Database.createConnection(knex, configuration[process.env.NODE_ENV]);
   app.listen(process.env.PORT, () => {

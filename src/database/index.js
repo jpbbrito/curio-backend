@@ -4,7 +4,7 @@ class Database {
 
     }
     static async createConnection(knex, configuration) {
-        console.log(configuration)
+        console.log('NODE_ENV :', Object.keys(configuration));
         try {
             this.connection = await knex(configuration);
             console.log('Database working');
