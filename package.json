@@ -6,6 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=development jest --runInBand",
     "dev": "NODE_ENV=development npx nodemon app.js",
+    "stagging": "NODE_ENV=stagging npx nodemon app.js",
     "start": "node app.js",
     "test:prod": "NODE_ENV=production node app.js"
   },
