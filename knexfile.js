@@ -11,7 +11,7 @@ module.exports = {
       directory: './src/database/migrations/',
     },
   },
-  stagging: {
+  staging: {
     client: 'oracledb',
     connection: {
       connectString: process.env.DATABASE_CONNECTION_STRING,

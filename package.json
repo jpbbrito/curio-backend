@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=development jest --runInBand",
     "dev": "NODE_ENV=development npx nodemon app.js",
-    "stagging": "NODE_ENV=stagging npx nodemon app.js",
+    "staging": "NODE_ENV=staging npx nodemon app.js",
     "start": "node app.js",
     "test:prod": "NODE_ENV=production node app.js"
   },
@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "knex": "^0.95.4",
     "nodemon": "^2.0.7",
+    "oci-sdk": "^2.14.0",
     "oracledb": "^5.1.0",
     "swagger-ui-express": "^4.1.6"
   },
