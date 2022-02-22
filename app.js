@@ -8,7 +8,39 @@ const app = require('./src/server');
 console.log('NODE_ENV: ', Object.keys(process.env));
 console.log('TNS_ADMIN: ', process.env.TNS_ADMIN);
 console.log('PWD: ', process.env.PWD);
+// TESTE 
+const fs = require('fs');
 
+// directory path
+const dir = './files';
+
+// list all files in the directory
+fs.readdir(dir, (err, files) => {
+    if (err) {
+        throw err;
+    }
+
+    // files object contains all files names
+    // log them on console
+    files.forEach(file => {
+        console.log('./files ', file);
+    });
+});
+
+const dirWallet = './files/wallet';
+
+// list all files in the directory
+fs.readdir(dirWallet, (err, files) => {
+    if (err) {
+        throw err;
+    }
+
+    // files object contains all files names
+    // log them on console
+    files.forEach(file => {
+        console.log('./files/wallet', file);
+    });
+});
 
 async function start(){
   await Database.createConnection(knex, configuration[process.env.NODE_ENV]);
