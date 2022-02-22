@@ -8,6 +8,7 @@ const app = require('./src/server');
 console.log('NODE_ENV: ', Object.keys(process.env));
 console.log('TNS_ADMIN: ', process.env.TNS_ADMIN);
 console.log('PWD: ', process.env.PWD);
+
 // TESTE 
 const fs = require('fs');
 
