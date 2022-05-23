@@ -1,0 +1,33 @@
+{
+  "name": "curio-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "NODE_ENV=development jest --runInBand",
+    "dev": "NODE_ENV=development npx nodemon app.js",
+    "staging": "NODE_ENV=staging npx nodemon app.js",
+    "start": "node app.js",
+    "test:prod": "NODE_ENV=production node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "2.8.5",
+    "dayjs": "1.10.7",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "knex": "0.95.15",
+    "nodemon": "2.0.7",
+    "oci-sdk": "2.14.0",
+    "oracledb": "5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
+  }
+}

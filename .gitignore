@@ -1,6 +1,7 @@
-backend/node_modules
-backend/dist
-backend/.env
-backend/knexfile.js
-backend/wallet
-backend/.env
+node_modules/
+.env
+.test.env
+.dev.env
+.stag.env
+files/
+*.save

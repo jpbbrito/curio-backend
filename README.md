@@ -19,3 +19,19 @@ O *back office* só começa após sera finalizado o App, sua construção sera f
 O Aplicativo está sendo construido com Ionic 5 com Capacitor. O sistema de mapas é o [MapxBox](https://www.mapbox.com/). Esse é esta em fase final de construção.
 
 ![Imagem](image1.jpeg)
+
+### Backend
+
+# Instalar pacotes
+``npm install``
+
+
+## Configurar DB
+
+## Configurar Env Oracle Autonomous Database
+
+``export TNS_ADMIN=$(pwd)/files/wallet``
+
+## Executar Migrations
+
+``npx knex migrate:latest``
