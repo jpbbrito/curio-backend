@@ -1,15 +1,15 @@
 const { randomUUID } = require('crypto');
-const Database = require('../database');
+const Database = require('../../database');
 
 module.exports = {
   async getAll(limit, page) {
     console.log('[problemRepository]->getAll() limit, page-> ', limit, page);
     try {
       const problems = await Database.connection
-        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'created_at', 'updated_at')
+        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'createdAt', 'updatedAt')
         .from('problems')
         .where('status', '!=', 'deleted')
-        .orderBy('created_at', 'desc')
+        .orderBy('createdAt', 'desc')
         .limit(limit)
         .offset((page - 1) * limit);
       return problems;
@@ -19,20 +19,21 @@ module.exports = {
   },
   async save(
     {
-      description, address, longitude, latitude, reporterContact,
+      description, address, longitude, latitude, category, reporterUsername,
     },
   ) {
     const uuid = await randomUUID();
-    console.log('[problemRepository]->save()  ', description, address, longitude, latitude, reporterContact, uuid);
+    console.log('[problemRepository]->save()  ', description, address, longitude, latitude, category, reporterUsername, uuid);
     try {
       await Database.connection('problems')
         .insert({
           uuid,
           description,
           address,
-          longitude,
-          latitude,
-          reporter_contact: reporterContact,
+          longitude: parseFloat(longitude),
+          latitude: parseFloat(latitude),
+          category,
+          reporterUsername,
           status: 'not_solved',
         });
       return uuid;
@@ -44,11 +45,11 @@ module.exports = {
     console.log('[problemRepository]->findByUUID() uuid-> ', uuid);
     try {
       const problem = await Database.connection
-        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'created_at', 'updated_at')
+        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'createdAt', 'updatedAt')
         .from('problems')
         .where({ uuid });
       if (problem.length === 0) {
-        return undefined;
+        return false;
       }
       return problem;
     } catch (error) {
@@ -62,12 +63,12 @@ module.exports = {
         .where('uuid', '=', uuid)
         .update({
           description,
-          updated_at: Database.connection.fn.now(),
+          updatedAt: Database.connection.fn.now(),
         });
       if (result === 1) {
         return true;
       }
-      return undefined;
+      return false;
     } catch (error) {
       throw Error(error);
     }
@@ -79,12 +80,12 @@ module.exports = {
         .where('uuid', '=', uuid)
         .update({
           status: 'deleted',
-          updated_at: Database.connection.fn.now(),
+          updatedAt: Database.connection.fn.now(),
         });
       if (result === 1) {
         return true;
       }
-      return undefined;
+      return false;
     } catch (error) {
       throw Error(error);
     }

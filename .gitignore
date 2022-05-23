@@ -1,5 +1,7 @@
 node_modules/
 .env
-.env.test
-.env.dev
+.test.env
+.dev.env
+.stag.env
 files/
+*.save

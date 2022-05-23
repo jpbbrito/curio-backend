@@ -1,9 +1,9 @@
-const { response } = require('express');
 const request = require('supertest');
 const app = require('../../src/server');
+const knex = require('knex');
+const configuration = require('../../knexfile');
+const Database = require('../../database/index');
 
-const { Database, init } = require('../../src/database/index.js');
-init();
 
 const dataInvalidPayload = {
   description: 'Buraco na rua',
@@ -21,6 +21,9 @@ const dataValid = {
 };
 
 describe('api/problems', () => {
+  beforeAll(() => {
+    Database.createConnection(knex, configuration);
+  })
   afterAll(() => {
     Database.connection.destroy();
   });

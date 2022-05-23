@@ -1,3 +1,8 @@
+
+if(!process.env.NODE_ENV) {
+  require('dotenv').config({ path: '.dev.env' });
+}
+
 module.exports = {
   development: {
     client: 'oracledb',
@@ -8,7 +13,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './src/database/migrations/',
+      directory: './database/migrations/',
     },
   },
   staging: {
@@ -20,9 +25,9 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './src/database/migrations/',
+      directory: './database/migrations/',
     },
-  },
+  }, 
   production: {
     client: 'oracledb',
     connection: {
@@ -36,7 +41,7 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations',
-      directory: './src/database/migrations/',
+      directory: './database/migrations/',
     },
   },
 

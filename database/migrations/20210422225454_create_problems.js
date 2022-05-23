@@ -3,14 +3,16 @@ exports.up = async (knex) => {
   if (!exists) {
     return knex.schema.createTable('problems', (table) => {
       table.increments('id').primary();
-      table.uuid('uuid').notNullable();
-      table.text('description').notNullable();
-      table.text('address').notNullable();
+      table.uuid('uuid').unique().notNullable();
+      table.string('description').notNullable();
+      table.string('address').notNullable();
       table.decimal('longitude', 10, 8).notNullable();
       table.decimal('latitude', 10, 8).notNullable();
-      table.string('reporter_contact');
+      table.string('category').notNullable();
+      table.string('reporterUsername').notNullable();
       table.string('status').notNullable();
-      table.timestamps(true, true);
+      table.timestamp('createdAt').defaultTo(knex.fn.now()).notNullable();
+      table.timestamp('updatedAt').defaultTo(knex.fn.now()).notNullable();
     });
   }
 };

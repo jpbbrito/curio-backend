@@ -37,7 +37,8 @@ module.exports = {
       address,
       longitude,
       latitude,
-      reporterContact
+      category,
+      reporterUsername
     } = request.body;
 
     let errors = [];
@@ -53,8 +54,11 @@ module.exports = {
     if (!latitude) {
       errors.push({ latitude: 'Esse campo é obrigatorio' });
     }
-    if (!reporterContact || reporterContact.length < 12) {
-      errors.push({ reporterContact: 'Esse campo é obrigatorio' });
+    if (!category) {
+      errors.push({ category: 'Esse campo é obrigatorio' });
+    }
+    if (!reporterUsername || reporterUsername.length < 12) {
+      errors.push({ reporterUsername: 'Esse campo é obrigatorio, é numero de contato' });
     }
 
     if (errors.length > 0) {
