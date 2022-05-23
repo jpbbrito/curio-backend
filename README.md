@@ -14,7 +14,7 @@ Link para a documentação da API [aqui](http://problemascidade.duckdns.org/api)
 
 O *back office* só começa após sera finalizado o App, sua construção sera feito com Angular.
 
-## App Mobile
+## App Mobile - DESCONTINUADO
 
 O Aplicativo está sendo construido com Ionic 5 com Capacitor. O sistema de mapas é o [MapxBox](https://www.mapbox.com/). Esse é esta em fase final de construção.
 
