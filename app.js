@@ -1,5 +1,5 @@
 require('dotenv').config({
-  path: process.env.NODE_ENV === 'test' ? '.test.env' : process.env.NODE_ENV == 'dev' ? '.dev.env' : '.stag.env' });
+  path: process.env.NODE_ENV === 'test' ? '.test.env' : process.env.NODE_ENV == 'development' ? '.dev.env' : '.stag.env' });
 const knex = require('knex');
 const configuration = require('./knexfile');
 const Database = require('./database/index');

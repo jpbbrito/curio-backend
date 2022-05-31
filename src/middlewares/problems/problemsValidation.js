@@ -45,8 +45,8 @@ module.exports = {
     if (!description || description.length < 10) {
       errors.push({ description: 'Esse campo deve ter no minimo 10 caracteres' });
     }
-    if (!address || address.length < 10) {
-      errors.push({ address: 'Esse campo deve ter no minimo 10 caracteres' });
+    if (!address || address.length < 5) {
+      errors.push({ address: 'Esse campo deve ter no minimo 5 caracteres' });
     }
     if (!longitude) {
       errors.push({ longitude: 'Esse campo é obrigatorio' });
@@ -57,7 +57,7 @@ module.exports = {
     if (!category) {
       errors.push({ category: 'Esse campo é obrigatorio' });
     }
-    if (!reporterUsername || reporterUsername.length < 12) {
+    if (!reporterUsername) {
       errors.push({ reporterUsername: 'Esse campo é obrigatorio, é numero de contato' });
     }
 
