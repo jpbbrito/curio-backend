@@ -14,7 +14,8 @@ module.exports = {
         .offset((page - 1) * limit);
       return problems;
     } catch (err) {
-      throw Error(err);
+      console.log('[problemRepository]->getAll() error > ', error);
+      return 'code_error_db'
     }
   },
   async save(
@@ -38,20 +39,21 @@ module.exports = {
         });
       return uuid;
     } catch (err) {
-      throw Error(err);
+      console.log('[problemRepository]->save() error > ', error);
+      return 'code_error_db'
     }
   },
-  async findByUUID(uuid) {
+  async findByUUID(uuid, columns = ['*']) {
     console.log('[problemRepository]->findByUUID() uuid-> ', uuid);
     try {
       const problem = await Database.connection
-        .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'createdAt', 'updatedAt')
+        .select(columns)
         .from('problems')
         .where({ uuid });
       if (problem.length === 0) {
         return false;
       }
-      return problem;
+      return problem[0];
     } catch (error) {
       throw Error(error);
     }
@@ -70,7 +72,8 @@ module.exports = {
       }
       return false;
     } catch (error) {
-      throw Error(error);
+      console.log('[problemRepository]->updateByUUID() error > ', error);
+      return 'code_error_db'
     }
   },
   async removeByUUID(uuid) {
@@ -87,7 +90,8 @@ module.exports = {
       }
       return false;
     } catch (error) {
-      throw Error(error);
+      console.log('[problemRepository]->removeByUUID() error > ', error);
+      return 'code_error_db'
     }
   },
 };
