@@ -4,7 +4,7 @@ exports.up = async (knex) => {
     return knex.schema.createTable('images_problems', (table) => {
       table.increments('id').primary();
       table.uuid('uuid').unique().notNullable();
-      table.string('base64', 255).notNullable();
+      table.text('base64', 255).notNullable();
       table.string('description');
       table.integer('problemId').unsigned().notNullable();
       table.foreign('problemId').references('id').inTable('problems');
