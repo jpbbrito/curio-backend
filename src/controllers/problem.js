@@ -44,7 +44,7 @@ module.exports = {
       return response.status(503).json({ error: 'Deu erro tente novamente!' });
     }
     if (uuid) {
-      return response.status(201).json({ message: 'Item created', problemId: uuid });
+      return response.status(201).json({ message: 'Item created', uuid });
     }
     return response.status(400).json({ message: 'There was an error ' });
   },

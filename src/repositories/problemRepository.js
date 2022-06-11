@@ -13,9 +13,9 @@ module.exports = {
         .limit(limit)
         .offset((page - 1) * limit);
       return problems;
-    } catch (err) {
+    } catch (error) {
       console.log('[problemRepository]->getAll() error > ', error);
-      return 'code_error_db'
+      return 'code_error_db';
     }
   },
   async save(
@@ -38,7 +38,7 @@ module.exports = {
           status: 'not_solved',
         });
       return uuid;
-    } catch (err) {
+    } catch (error) {
       console.log('[problemRepository]->save() error > ', error);
       return 'code_error_db'
     }
@@ -55,7 +55,8 @@ module.exports = {
       }
       return problem[0];
     } catch (error) {
-      throw Error(error);
+      console.log('[problemRepository]->findByUUID() error > ', error);
+      return 'code_error_db';
     }
   },
   async updateByUUID(uuid, description) {
@@ -73,7 +74,7 @@ module.exports = {
       return false;
     } catch (error) {
       console.log('[problemRepository]->updateByUUID() error > ', error);
-      return 'code_error_db'
+      return 'code_error_db';
     }
   },
   async removeByUUID(uuid) {
@@ -91,7 +92,7 @@ module.exports = {
       return false;
     } catch (error) {
       console.log('[problemRepository]->removeByUUID() error > ', error);
-      return 'code_error_db'
+      return 'code_error_db';
     }
   },
 };
