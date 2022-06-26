@@ -1,0 +1,7 @@
+{
+    "scripts": {
+        "dokku": {
+            "predeploy": "dokku ps:stop curio-backend-prod"
+        }
+    }
+}
