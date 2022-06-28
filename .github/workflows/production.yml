@@ -15,7 +15,7 @@ jobs:
         with:
           git_remote_url: ${{ secrets.SSH_HOST }} 
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          command: ps:stop curio-backend-prod
+          run: dokku ps:stop curio-backend-prod
       - name: Cloning repo
         uses: actions/checkout@v2
         with:
