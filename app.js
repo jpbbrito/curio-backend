@@ -6,7 +6,6 @@ const Database = require('./database/index');
 const app = require('./src/server');
 
 console.log('NODE_ENV: ', Object.keys(process.env));
-console.log('TNS_ADMIN: ', process.env.TNS_ADMIN);
 console.log('PWD:', process.env.PWD);
 
 async function start(){

@@ -5,3 +5,4 @@ node_modules/
 .stag.env
 files/
 *.save
+volume/

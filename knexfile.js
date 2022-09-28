@@ -5,11 +5,13 @@ if(!process.env.NODE_ENV) {
 
 module.exports = {
   development: {
-    client: 'oracledb',
+    client: process.env.DB_CLIENT,
     connection: {
-      connectString: process.env.DATABASE_CONNECTION_STRING,
-      user:  process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user:  process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME
     },
     migrations: {
       tableName: 'knex_migrations',
@@ -17,11 +19,13 @@ module.exports = {
     },
   },
   staging: {
-    client: 'oracledb',
+    client: process.env.DB_CLIENT,
     connection: {
-      connectString: process.env.DATABASE_CONNECTION_STRING,
-      user:  process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user:  process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME
     },
     migrations: {
       tableName: 'knex_migrations',
@@ -29,11 +33,13 @@ module.exports = {
     },
   }, 
   production: {
-    client: 'oracledb',
+    client: process.env.DB_CLIENT,
     connection: {
-      connectString: process.env.DATABASE_CONNECTION_STRING,
-      user:  process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user:  process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME
     },
     pool: {
       min: 2,
