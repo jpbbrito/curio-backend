@@ -5,12 +5,13 @@
   "main": "src/server.js",
   "scripts": {
     "test": "NODE_ENV=development jest --runInBand",
-    "predev": "docker compose --env-file .dev.env -f docker-compose.database.yml up -d",
+    "predev": "npm run db:dev:up",
     "dev": "NODE_ENV=development npx nodemon app.js",
-    "staging": "NODE_ENV=staging npx nodemon app.js",
+    "local:up": "docker compose --env-file .local.env up -d",
+    "local:down": "docker compose --env-file .local.env down",
     "start": "node app.js",
-    "db:dev:up": "docker compose --env-file .dev.env -f docker-compose.database.yml up -d",
-    "db:dev:down": "docker compose --env-file .dev.env -f docker-compose.database.yml down"
+    "db:dev:up": "docker compose --env-file .dev.env up db -d",
+    "db:dev:down": "docker compose --env-file .dev.env down db"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  api: 
+    container_name: curio_backend_${ENV}
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${API_PORT}:3000
+    env_file: 
+      - ${ENV_FILE}
+  db:
+    container_name: curio_db_${ENV}
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    volumes:
+      - ./volumes/${ENV}:/var/lib/postgresql/data
