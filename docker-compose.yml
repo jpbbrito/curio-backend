@@ -9,7 +9,7 @@ services:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - ${API_PORT}:3000
+      - ${HOST_PORT}:${API_PORT}
     env_file: 
       - ${ENV_FILE}
   db:

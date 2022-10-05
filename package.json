@@ -10,7 +10,7 @@
     "local:up": "docker compose --env-file .local.env up -d",
     "local:down": "docker compose --env-file .local.env down",
     "start": "docker compose --env-file .env up api -d",
-    "stop": "docker compose --env-file .env down api",
+    "stop": "docker compose --env-file .env down",
     "db:dev:up": "docker compose --env-file .dev.env up db -d",
     "db:dev:down": "docker compose --env-file .dev.env down db"
   },

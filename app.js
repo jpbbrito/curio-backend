@@ -10,7 +10,7 @@ console.log('KNEX.CONFIGURATION', configuration)
 async function start () {
   await Database.createConnection(knex, configuration[process.env.NODE_ENV])
   app.listen(process.env.API_PORT, () => {
-    console.log('Server running on PORT 3000')
+    console.log(`Server running on PORT ${process.env.API_PORT}`)
   })
 }
 
