@@ -1,65 +1,70 @@
-const problemRepository = require('../repositories/problemRepository');
-const imagesProblemsRepository = require('../repositories/imagesProblemsRepository');
-const { getByUUID } = require('./problem');
+import problemRepository from '../repositories/problemRepository.js'
+import imagesProblemsRepository from '../repositories/imagesProblemsRepository.js'
 
-module.exports = {
-    async save(request, response) {
-        const { base64, description } = request.body;
-        const { uuid } = request.params;
-        console.log('[imagesProblemsController.save()] ');
+async function save (request, response) {
+  const { base64, description } = request.body
+  const { uuid } = request.params
+  console.log('[imagesProblemsController.save()] ')
 
-        const problem = await problemRepository.findByUUID(uuid);
-        console.log('[imagesProblemsController.save()] problem', problem);
+  const problem = await problemRepository.findByUUID(uuid)
+  console.log('[imagesProblemsController.save()] problem', problem)
 
-        if (problem === 'code_error_db') {
-            return response.status(503).json({ error: 'Deu erro tente novamente!' });
-        }
-        if(!problem) {
-            return response.status(404).json({ error: 'Problema não foi encontrado'})
-        }
+  if (problem === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+  if (!problem) {
+    return response.status(404).json({ error: 'Problema não foi encontrado' })
+  }
 
-        const result = await imagesProblemsRepository.save(base64, description, problem.id);
-        
-        if (result === 'code_error_db') {
-            return response.status(503).json({ error: 'Deu erro tente novamente!' });
-        }
-        if(!result) {
-            return response.status(404).json({ error: 'Problema não foi encontrado'})
-        }
+  const result = await imagesProblemsRepository.save(base64, description, problem.id)
 
-        return response.status(201).json({ message: 'Item created', uuid })
-    },
-    async index(request, response) {
-        const { uuid } = request.params;
+  if (result === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+  if (!result) {
+    return response.status(404).json({ error: 'Problema não foi encontrado' })
+  }
 
-        const problem = await problemRepository.findByUUID(uuid);
-        console.log('[imagesProblemsController.save()] problem', problem);
+  return response.status(201).json({ message: 'Item created', uuid })
+}
 
-        const photos = await imagesProblemsRepository.findByProblemId(problem.id);
-        console.log('[imagesProblemsController.save()] photos', photos);
+async function index (request, response) {
+  const { uuid } = request.params
 
-        if (photos === 'code_error_db') {
-            return response.status(503).json({ error: 'Deu erro tente novamente!' });
-        }
-        if(!photos) {
-            return response.status(404).json({ error: 'Fotos não foram encontrados'})
-        }
+  const problem = await problemRepository.findByUUID(uuid)
+  console.log('[imagesProblemsController.save()] problem', problem)
 
-        return response.json(photos);
-    },
-    async getByUUID(request, response) {
-        const { uuid } = request.params;
+  const photos = await imagesProblemsRepository.findByProblemId(problem.id)
+  console.log('[imagesProblemsController.save()] photos', photos)
 
-        const photo = await imagesProblemsRepository.findByUUID(uuid, ['uuid', 'base64', 'description', 'createdAt', 'updatedAt']);
-        console.log('[imagesProblemsController.save()] photo', photo);
+  if (photos === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+  if (!photos) {
+    return response.status(404).json({ error: 'Fotos não foram encontrados' })
+  }
 
-        if (photo === 'code_error_db') {
-            return response.status(503).json({ error: 'Deu erro tente novamente!' });
-        }
-        if(!photo) {
-            return response.status(404).json({ error: 'Fotos não foram encontrados'})
-        }
+  return response.json(photos)
+}
 
-        return response.json(photo);
-    }
+async function getByUUID (request, response) {
+  const { uuid } = request.params
+
+  const photo = await imagesProblemsRepository.findByUUID(uuid, ['uuid', 'base64', 'description', 'createdAt', 'updatedAt'])
+  console.log('[imagesProblemsController.save()] photo', photo)
+
+  if (photo === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+  if (!photo) {
+    return response.status(404).json({ error: 'Fotos não foram encontrados' })
+  }
+
+  return response.json(photo)
+}
+
+export default {
+  getByUUID,
+  save,
+  index
 }

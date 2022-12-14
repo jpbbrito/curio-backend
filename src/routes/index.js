@@ -1,46 +1,47 @@
-const express = require('express');
-const routes = express.Router();
+import express from 'express'
 
-const problemController = require('../controllers/problem');
-const imagesProblemsController = require('../controllers/imagesProblems');
+import problemController from '../controllers/problem.js'
+import imagesProblemsController from '../controllers/imagesProblems.js'
 
-const validator = require('../middlewares/validator');
-const problemsValidation = require('../middlewares/problems/problemsValidation');
-const imagesProblemsValidation = require('../middlewares/problems/imagesProblemsValidation');
+import validator from '../middlewares/validator.js'
+import problemsValidation from '../middlewares/problems/problemsValidation.js'
+import imagesProblemsValidation from '../middlewares/problems/imagesProblemsValidation.js'
+
+const routes = express.Router()
 
 routes.get(
   '/problems',
   validator.checkApiKey,
   problemsValidation.index,
-  problemController.index,
-);
+  problemController.index
+)
 
 routes.delete(
   '/problems/:uuid',
   validator.checkApiKey,
   problemsValidation.remove,
-  problemController.remove,
-);
+  problemController.remove
+)
 
 routes.put(
   '/problems/:uuid',
   validator.checkApiKey,
   problemsValidation.update,
-  problemController.update,
-);
+  problemController.update
+)
 
 routes.get(
   '/problems/:uuid',
   validator.checkApiKey,
-  problemController.getByUUID,
-);
+  problemController.getByUUID
+)
 
 routes.post(
   '/problems',
   validator.checkApiKey,
   problemsValidation.save,
-  problemController.save,
-);
+  problemController.save
+)
 
 routes.post(
   '/problems/:uuid/images',
@@ -60,4 +61,5 @@ routes.get(
   validator.checkApiKey,
   imagesProblemsController.getByUUID
 )
-module.exports = routes;
+
+export default routes

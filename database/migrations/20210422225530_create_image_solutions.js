@@ -1,4 +1,4 @@
-exports.up = async (knex) => {
+export async function up (knex)   {
   const exists = await knex.schema.hasTable('images_solutions');
   if (!exists) {
     return knex.schema.createTable('images_solutions', (table) => {
@@ -14,4 +14,6 @@ exports.up = async (knex) => {
   }
 };
 
-exports.down = (knex) => knex.schema.dropTableIfExists('images_solutions');
+export async function down (knex) { 
+  return  knex.schema.dropTableIfExists('images_solutions')
+}

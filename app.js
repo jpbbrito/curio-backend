@@ -1,8 +1,11 @@
-require('dotenv').config({ path: process.env.NODE_ENV === 'local' ? '.local.env' : process.env.NODE_ENV === 'development' ? '.dev.env' : '.env' })
-const knex = require('knex')
-const configuration = require('./knexfile')
-const Database = require('./database/index')
-const app = require('./src/server')
+/* eslint-disable import/first */
+import loadEnv from './config/load-env.js'
+loadEnv()
+
+import knex from 'knex'
+import configuration from './knexfile.js'
+import Database from './database/index.js'
+import app from './src/server.js'
 
 console.log('NODE_ENV: ', Object.keys(process.env))
 console.log('PWD:', process.env.PWD)

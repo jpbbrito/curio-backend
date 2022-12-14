@@ -1,8 +1,8 @@
-const request = require('supertest');
-const app = require('../../src/server');
-const knex = require('knex');
-const configuration = require('../../knexfile');
-const Database = require('../../database/index');
+const request from 'supertest');
+const app from '../../src/server');
+const knex from 'knex');
+const configuration from '../../knexfile');
+const Database from '../../database/index');
 
 
 const dataInvalidPayload = {
