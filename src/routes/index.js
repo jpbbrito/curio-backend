@@ -53,6 +53,7 @@ routes.post(
 routes.get(
   '/problems/:uuid/images',
   validator.checkApiKey,
+  imagesProblemsValidation.getImages,
   imagesProblemsController.index
 )
 

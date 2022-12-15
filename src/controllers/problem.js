@@ -1,5 +1,6 @@
 import problemRepository from '../repositories/problemRepository.js'
 import imagesProblemsRepository from '../repositories/imagesProblemsRepository.js'
+import { getInfoByGeolocation } from '../services/google-maps.js'
 
 async function index (request, response) {
   const { limit, page } = request.query
@@ -40,6 +41,10 @@ export async function remove (request, response) {
 
 async function save (request, response) {
   const { body } = request
+
+  const mapsInfo = await getInfoByGeolocation(process.env.GOOGLE_API_KEY, body.latitude, body.longitude)
+
+  console.log('[problem.controller].save() response', mapsInfo)
 
   const uuid = await problemRepository.save(body)
   if (uuid === 'code_error_db') {

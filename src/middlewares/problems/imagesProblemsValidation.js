@@ -3,7 +3,7 @@ function save (request, response, next) {
     base64
   } = request.body
 
-  if (!request.params.uuid || request.params.uuid === 'null') {
+  if (!request.params.uuid || request.params.uuid.length !== 36) {
     return response.status(400).json({
       error: 'UUID não informado!'
     })
@@ -20,6 +20,20 @@ function save (request, response, next) {
   return next()
 }
 
+function getImages (request, response, next) {
+  const {
+    uuid
+  } = request.params
+
+  if (!uuid || uuid.length !== 36) {
+    return response.status(400).json({
+      error: 'UUID não informado!'
+    })
+  }
+  return next()
+}
+
 export default {
-  save
+  save,
+  getImages
 }

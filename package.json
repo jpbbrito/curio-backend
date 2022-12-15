@@ -8,6 +8,9 @@
     "test": "NODE_ENV=development jest --runInBand",
     "predev": "npm run db:dev:up",
     "dev": "NODE_ENV=development npx nodemon app.js",
+    "knex:dev": "NODE_ENV=development npx knex --env .dev.env",
+    "knex:local": "NODE_ENV=local npx knex --env .local.env",
+    "knex:prod": "NODE_ENV=production npx knex --env .env",
     "local:up": "docker compose --env-file .local.env up -d",
     "local:down": "docker compose --env-file .local.env down",
     "start": "docker compose --env-file .env up api -d",
@@ -21,7 +24,6 @@
   "dependencies": {
     "axios": "^1.2.1",
     "cors": "2.8.5",
-    "dayjs": "1.10.7",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "knex": "0.95.15",

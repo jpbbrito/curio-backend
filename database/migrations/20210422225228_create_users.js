@@ -1,5 +1,5 @@
 
-export async function up (knex)   {
+export async function up (knex) {
   const exists = await knex.schema.hasTable('users')
   if (!exists) {
     return knex.schema.createTable('users', (table) => {
@@ -12,9 +12,10 @@ export async function up (knex)   {
       table.string('level', 20).notNullable()
       table.timestamp('createdAt').defaultTo(knex.fn.now()).notNullable()
       table.timestamp('updatedAt').defaultTo(knex.fn.now()).notNullable()
-    });
+    })
   }
-};
-export async function down  (knex) { 
-  return  knex.schema.dropTableIfExists('users')
+}
+
+export async function down (knex) {
+  return knex.schema.dropTableIfExists('users')
 }
