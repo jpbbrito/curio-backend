@@ -44,16 +44,61 @@ async function save (request, response) {
 
   const mapsInfo = await getInfoByGeolocation(process.env.GOOGLE_API_KEY, body.latitude, body.longitude)
 
+  let uuid
   console.log('[problem.controller].save() response', mapsInfo)
 
-  const uuid = await problemRepository.save(body)
+  if (mapsInfo === 'error_api') {
+    uuid = await problemRepository.save({
+      ...body,
+      reporterName: body.reporterName ?? 'SEM_REGISTRO',
+      country: 'error_api',
+      state: 'error_api',
+      city: 'error_api',
+      neighborhood: 'error_api',
+      dataJson: 'error_api'
+    })
+  } else {
+    const arr = mapsInfo.results[0].address_components
+    console.log('[problem.controller].save() mapsInfo.arr', arr)
+    const city = arr.filter(value => {
+      console.log('[problem.controller].save() value.types[0]', value.types[0])
+      return value.types[0] === 'administrative_area_level_2' || value.types[1] === 'administrative_area_level_2'
+    })
+    console.log('[problem.controller].save() city', city)
+    const state = arr.filter(value => {
+      console.log('[problem.controller].save() value.types[0]', value.types[0])
+      return value.types[0] === 'administrative_area_level_1' || value.types[1] === 'administrative_area_level_1'
+    })
+    console.log('[problem.controller].save() state', state)
+    const country = arr.filter(value => {
+      console.log('[problem.controller].save() value.types[0]', value.types[0])
+      return value.types[0] === 'country' || value.types[1] === 'country'
+    })
+    console.log('[problem.controller].save() country', country)
+    const neighborhood = arr.filter(value => {
+      console.log('[problem.controller].save() value.types[0]', value.types[0])
+      return value.types[0] === 'sublocality' || value.types[1] === 'sublocality'
+    })
+    console.log('[problem.controller].save() neighborhood', neighborhood)
+
+    uuid = await problemRepository.save({
+      ...body,
+      reporterName: body.reporterName ?? 'SEM_REGISTRO',
+      country: country[0]?.long_name ?? 'SEM_REGISTRO',
+      state: state[0]?.long_name ?? 'SEM_REGISTRO',
+      city: city[0]?.long_name ?? 'SEM_REGISTRO',
+      neighborhood: neighborhood[0]?.long_name ?? 'SEM_REGISTRO',
+      dataJson: mapsInfo
+    })
+  }
+
   if (uuid === 'code_error_db') {
     return response.status(503).json({ error: 'Deu erro tente novamente!' })
   }
   if (uuid) {
     return response.status(201).json({ message: 'Item created', uuid })
   }
-  return response.status(400).json({ message: 'There was an error ' })
+  return response.status(400).json({ message: 'Deu erro tente novamente!' })
 }
 
 async function getByUUID (request, response) {

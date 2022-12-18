@@ -9,8 +9,9 @@ export async function getInfoByGeolocation (apiKey, latitude, longitude) {
       url
     })
     console.log('[getInfoByGeolocation] result -', result)
-    return result
+    return result.data
   } catch (error) {
     console.log('[getInfoByGeolocation] error -', error)
+    return 'error_api'
   }
 }

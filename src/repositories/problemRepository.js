@@ -20,7 +20,18 @@ async function getAll (limit, page) {
 
 async function save (
   {
-    description, address, longitude, latitude, category, reporterUsername
+    description,
+    address,
+    longitude,
+    latitude,
+    category,
+    reporterUsername,
+    reporterName,
+    country,
+    state,
+    city,
+    neighborhood,
+    dataJson
   }
 ) {
   const uuid = await randomUUID()
@@ -35,6 +46,12 @@ async function save (
         latitude: parseFloat(latitude),
         category,
         reporterUsername,
+        reporterName,
+        country,
+        state,
+        city,
+        neighborhood,
+        dataJson,
         status: 'not_solved'
       })
     return uuid
