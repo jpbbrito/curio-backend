@@ -1,9 +1,7 @@
+import loadEnv from './config/load-env.js'
+loadEnv()
 
-if (!process.env.NODE_ENV) {
-  require('dotenv').config({ path: process.env.NODE_ENV === 'local' ? '.local.env' : process.env.NODE_ENV === 'development' ? '.dev.env' : '.env' })
-}
-
-module.exports = {
+export default {
   development: {
     client: process.env.DB_CLIENT,
     connection: {
@@ -50,5 +48,4 @@ module.exports = {
       directory: './database/migrations/'
     }
   }
-
 }

@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
     "test": "NODE_ENV=development jest --runInBand",
     "predev": "npm run db:dev:up",
     "dev": "NODE_ENV=development npx nodemon app.js",
+    "knex:dev": "NODE_ENV=development npx knex",
+    "knex:local": "NODE_ENV=local npx knex",
+    "knex:prod": "NODE_ENV=production npx knex",
     "local:up": "docker compose --env-file .local.env up -d",
     "local:down": "docker compose --env-file .local.env down",
     "start": "docker compose --env-file .env up api -d",
@@ -18,8 +22,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.2.1",
     "cors": "2.8.5",
-    "dayjs": "1.10.7",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "knex": "0.95.15",
@@ -27,12 +31,12 @@
     "pg": "8.8.0"
   },
   "devDependencies": {
-    "eslint": "^8.24.0",
+    "eslint": "^8.29.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.3.0",
-    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-n": "^15.6.0",
+    "eslint-plugin-promise": "^6.1.1",
     "jest": "^26.6.3",
     "supertest": "^6.1.3"
   }

@@ -1,4 +1,4 @@
-class Database {
+export default class Database {
     
     static connection 
 
@@ -19,5 +19,3 @@ class Database {
     }
 }
 
-
-module.exports = Database;
