@@ -1,11 +1,11 @@
 import express from 'express'
 
 import problemController from '../controllers/problem.js'
-import imagesProblemsController from '../controllers/imagesProblems.js'
+import imagesProblemsController from '../controllers/images-problems.js'
 
 import validator from '../middlewares/validator.js'
-import problemsValidation from '../middlewares/problems/problemsValidation.js'
-import imagesProblemsValidation from '../middlewares/problems/imagesProblemsValidation.js'
+import problemsValidation from '../middlewares/problems/problems-validation.js'
+import imagesProblemsValidation from '../middlewares/problems/images-problems-validation.js'
 
 const routes = express.Router()
 

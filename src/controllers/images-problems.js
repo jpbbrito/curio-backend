@@ -1,5 +1,5 @@
-import problemRepository from '../repositories/problemRepository.js'
-import imagesProblemsRepository from '../repositories/imagesProblemsRepository.js'
+import problemRepository from '../repositories/problem-repository.js'
+import imagesProblemsRepository from '../repositories/images-problems-repository.js'
 
 async function save (request, response) {
   const { base64, description } = request.body
