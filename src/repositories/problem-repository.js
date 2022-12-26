@@ -5,7 +5,7 @@ async function getAll (limit, page) {
   console.log('[problemRepository]->getAll() limit, page-> ', limit, page)
   try {
     const problems = await Database.connection
-      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'createdAt', 'updatedAt')
+      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
       .from('problems')
       .where('status', '!=', 'deleted')
       .orderBy('createdAt', 'desc')
