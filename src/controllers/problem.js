@@ -88,7 +88,7 @@ async function save (request, response) {
       state: state[0]?.long_name ?? 'SEM_REGISTRO',
       city: city[0]?.long_name ?? 'SEM_REGISTRO',
       neighborhood: neighborhood[0]?.long_name ?? 'SEM_REGISTRO',
-      dataJson: mapsInfo
+      dataJson: { googleMapsData: mapsInfo }
     })
   }
 
