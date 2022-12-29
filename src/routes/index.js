@@ -16,6 +16,20 @@ routes.get(
   problemController.index
 )
 
+routes.get(
+  '/problems/location?',
+  validator.checkApiKey,
+  problemsValidation.location,
+  problemController.location
+)
+
+routes.get(
+  '/problems/geolocation?',
+  validator.checkApiKey,
+  problemsValidation.geoLocation,
+  problemController.geoLocation
+)
+
 routes.delete(
   '/problems/:uuid',
   validator.checkApiKey,

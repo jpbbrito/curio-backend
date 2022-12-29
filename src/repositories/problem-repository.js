@@ -9,8 +9,8 @@ async function getAll (limit, page) {
       .from('problems')
       .where('status', '!=', 'deleted')
       .orderBy('createdAt', 'desc')
-      .limit(limit)
-      .offset((page - 1) * limit)
+      .limit(parseInt(limit))
+      .offset((parseInt(page) - 1) * parseInt(limit))
     return problems
   } catch (error) {
     console.log('[problemRepository]->getAll() error > ', error)
@@ -116,7 +116,47 @@ async function removeByUUID (uuid) {
   }
 }
 
+async function findByNeighborhood (country, state, city, neighborhood, limit, page) {
+  console.log('[problemRepository]->findByNeighborhood() country, state, city, neighborhood-> ', country, state, city, neighborhood)
+  try {
+    const result = await Database.connection('problems')
+      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
+      .where('status', '!=', 'deleted')
+      .andWhere({ country })
+      .andWhere({ state })
+      .andWhere({ city })
+      .andWhere({ neighborhood })
+      .orderBy('createdAt', 'desc')
+      .limit(parseInt(limit))
+      .offset((parseInt(page) - 1) * parseInt(limit))
+    return result
+  } catch (error) {
+    console.log('[problemRepository]->findByNeighborhood() error > ', error)
+    return 'code_error_db'
+  }
+}
+
+async function findByCity (country, state, city, limit, page) {
+  console.log('[problemRepository]->findByCity() country, state, city, neighborhood-> ', country, state, city)
+  try {
+    const result = await Database.connection('problems')
+      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
+      .where('status', '!=', 'deleted')
+      .andWhere({ country })
+      .andWhere({ state })
+      .andWhere({ city })
+      .orderBy('createdAt', 'desc')
+      .limit(parseInt(limit))
+      .offset((parseInt(page) - 1) * parseInt(limit))
+    return result
+  } catch (error) {
+    console.log('[problemRepository]->findByCity() error > ', error)
+    return 'code_error_db'
+  }
+}
 export default {
+  findByCity,
+  findByNeighborhood,
   removeByUUID,
   updateByUUID,
   findByUUID,

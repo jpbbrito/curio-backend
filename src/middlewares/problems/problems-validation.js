@@ -9,6 +9,46 @@ function index (request, response, next) {
   return next()
 }
 
+function location (request, response, next) {
+  const { country, state, city, limit, page } = request.query
+  console.log('location -> ', request.query)
+
+  if (!country || !state || !city) {
+    return response.status(400).json({
+      error: 'os campos a seguir não foram encontrados como parametros: country, state, city'
+    })
+  }
+
+  if (!limit || limit.length === 0) {
+    request.query.limit = 10
+  }
+  if (!page || page.length === 0) {
+    request.query.page = 1
+  }
+
+  return next()
+}
+
+function geoLocation (request, response, next) {
+  const { longitude, latitude, limit, page } = request.query
+  console.log('location -> ', request.query)
+
+  if (!longitude || !latitude) {
+    return response.status(400).json({
+      error: 'os campos a seguir não foram encontrados como parametros: country, state, city'
+    })
+  }
+
+  if (!limit || limit.length === 0) {
+    request.query.limit = 10
+  }
+  if (!page || page.length === 0) {
+    request.query.page = 1
+  }
+
+  return next()
+}
+
 function remove (request, response, next) {
   const { uuid } = request.params
   if (!uuid) {
@@ -71,6 +111,8 @@ function save (request, response, next) {
 }
 
 export default {
+  location,
+  geoLocation,
   save,
   remove,
   index,
