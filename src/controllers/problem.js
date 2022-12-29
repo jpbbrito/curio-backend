@@ -12,6 +12,90 @@ async function index (request, response) {
   return response.json(problems)
 }
 
+async function location (request, response) {
+  const { country, state, city, neighborhood, limit, page } = request.query
+  console.log('[problemController]->location() request.query-> ', request.query)
+
+  if (country && state && city && neighborhood) {
+    const result = await problemRepository.findByNeighborhood(country, state, city, neighborhood, limit, page)
+
+    if (result === 'code_error_db') {
+      return response.status(503).json({ error: 'Deu erro tente novamente!' })
+    }
+    return response.json(result)
+  }
+
+  if (country && state && city) {
+    const result = await problemRepository.findByCity(country, state, city, limit, page)
+
+    if (result === 'code_error_db') {
+      return response.status(503).json({ error: 'Deu erro tente novamente!' })
+    }
+    return response.json(result)
+  }
+  return response.status(400).json({ message: 'Deu erro tente novamente!' })
+}
+
+async function geoLocation (request, response) {
+  const { latitude, longitude, limit, page } = request.query
+  console.log('[problemController]->geoLocation() request.query-> ', request.query)
+
+  const mapsInfo = await getInfoByGeolocation(process.env.GOOGLE_API_KEY, latitude, longitude)
+
+  if (mapsInfo === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+
+  const arr = mapsInfo.results[0].address_components
+  console.log('[problem.controller].geoLocation() mapsInfo.arr', arr)
+  const city = arr.filter(value => {
+    return value.types[0] === 'administrative_area_level_2' || value.types[1] === 'administrative_area_level_2'
+  })
+  console.log('[problem.controller].geoLocation() city', city)
+  const state = arr.filter(value => {
+    return value.types[0] === 'administrative_area_level_1' || value.types[1] === 'administrative_area_level_1'
+  })
+  console.log('[problem.controller].geoLocation() state', state)
+  const country = arr.filter(value => {
+    return value.types[0] === 'country' || value.types[1] === 'country'
+  })
+  console.log('[problem.controller].geoLocation() country', country)
+  const neighborhood = arr.filter(value => {
+    return value.types[0] === 'sublocality' || value.types[1] === 'sublocality'
+  })
+  console.log('[problem.controller].geoLocation() neighborhood', neighborhood)
+
+  if (city === neighborhood || neighborhood.length === 0) {
+    const result = await problemRepository.findByCity(
+      country[0]?.long_name,
+      state[0]?.long_name,
+      city[0]?.long_name,
+      neighborhood[0]?.long_name,
+      limit,
+      page
+    )
+    if (result === 'code_error_db') {
+      return response.status(503).json({ error: 'Deu erro tente novamente!' })
+    }
+    return response.json(result)
+  }
+
+  const result = await problemRepository.findByNeighborhood(
+    country[0]?.long_name,
+    state[0]?.long_name,
+    city[0]?.long_name,
+    neighborhood[0]?.long_name,
+    limit,
+    page
+  )
+
+  if (result === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+
+  return response.json(result)
+}
+
 async function update (request, response) {
   const { uuid } = request.params
   const { description } = request.body
@@ -125,6 +209,8 @@ async function getByUUID (request, response) {
 
 export default {
   index,
+  location,
+  geoLocation,
   update,
   remove,
   save,
