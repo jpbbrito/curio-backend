@@ -78,6 +78,23 @@ async function findByUUID (uuid, columns = ['*']) {
   }
 }
 
+async function findByUsername (user, columns = ['*'], limit, page) {
+  console.log('[problemRepository]->findByUsername() user-> ', user)
+  try {
+    const problem = await Database.connection
+      .select(columns)
+      .from('problems')
+      .where({ reporterUsername: user })
+      .orderBy('createdAt', 'desc')
+      .limit(parseInt(limit))
+      .offset((parseInt(page) - 1) * parseInt(limit))
+    return problem
+  } catch (error) {
+    console.log('[problemRepository]->findByUUID() error > ', error)
+    return 'code_error_db'
+  }
+}
+
 async function updateByUUID (uuid, description) {
   console.log('[problemRepository]->updateByUUID() uuid, description-> ', uuid, description)
   try {
@@ -172,6 +189,7 @@ async function findByCity (country, state, city, limit, page) {
   }
 }
 export default {
+  findByUsername,
   findByCity,
   findByNeighborhood,
   findByUsername,

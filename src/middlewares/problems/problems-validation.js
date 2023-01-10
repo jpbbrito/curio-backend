@@ -131,6 +131,7 @@ function save (request, response, next) {
 }
 
 export default {
+  getByUsername,
   location,
   geoLocation,
   getByUsername,

@@ -12,6 +12,36 @@ async function index (request, response) {
   return response.json(problems)
 }
 
+async function getByUsername (request, response) {
+  const { query: { user, limit, page } } = request
+
+  const result = await problemRepository.findByUsername(user, [
+    'uuid',
+    'description',
+    'address',
+    'longitude',
+    'latitude',
+    'status',
+    'reporterUsername',
+    'reporterName',
+    'country',
+    'state',
+    'city',
+    'neighborhood',
+    'createdAt',
+    'updatedAt'
+  ],
+  limit,
+  page
+  )
+  if (result === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+  if (result.length === 0) {
+    return response.status(404).json([])
+  }
+  return response.json(result)
+}
 async function location (request, response) {
   const { country, state, city, neighborhood, limit, page } = request.query
   console.log('[problemController]->location() request.query-> ', request.query)
@@ -263,6 +293,7 @@ async function getByUUID (request, response) {
 
 export default {
   index,
+  getByUsername,
   location,
   geoLocation,
   getByUsername,
