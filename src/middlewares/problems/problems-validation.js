@@ -49,6 +49,26 @@ function geoLocation (request, response, next) {
   return next()
 }
 
+function getByUsername (request, response, next) {
+  const { query: { user, limit, page } } = request
+  console.log('location -> ', request.query)
+
+  if (!user) {
+    return response.status(400).json({
+      error: 'os campos a seguir não foram encontrados como parametros: user'
+    })
+  }
+
+  if (!limit || limit.length === 0) {
+    request.query.limit = 10
+  }
+  if (!page || page.length === 0) {
+    request.query.page = 1
+  }
+
+  return next()
+}
+
 function remove (request, response, next) {
   const { uuid } = request.params
   if (!uuid) {
@@ -113,6 +133,7 @@ function save (request, response, next) {
 export default {
   location,
   geoLocation,
+  getByUsername,
   save,
   remove,
   index,
