@@ -36,6 +36,7 @@ routes.get(
   problemsValidation.getByUsername,
   problemController.getByUsername
 )
+
 routes.delete(
   '/problems/:uuid',
   validator.checkApiKey,

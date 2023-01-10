@@ -50,7 +50,7 @@ function geoLocation (request, response, next) {
 }
 
 function getByUsername (request, response, next) {
-  const { user, limit, page } = request.query
+  const { query: { user, limit, page } } = request
   console.log('location -> ', request.query)
 
   if (!user) {
@@ -68,6 +68,7 @@ function getByUsername (request, response, next) {
 
   return next()
 }
+
 function remove (request, response, next) {
   const { uuid } = request.params
   if (!uuid) {
@@ -133,6 +134,7 @@ export default {
   getByUsername,
   location,
   geoLocation,
+  getByUsername,
   save,
   remove,
   index,

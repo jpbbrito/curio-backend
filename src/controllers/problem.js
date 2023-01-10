@@ -149,6 +149,37 @@ async function geoLocation (request, response) {
   return response.json(result)
 }
 
+async function getByUsername (request, response) {
+  const { query: { user, limit, page } } = request
+
+  const result = await problemRepository.findByUsername(user, [
+    'uuid',
+    'description',
+    'address',
+    'longitude',
+    'latitude',
+    'status',
+    'reporterUsername',
+    'reporterName',
+    'country',
+    'state',
+    'city',
+    'neighborhood',
+    'createdAt',
+    'updatedAt'
+  ],
+  limit,
+  page
+  )
+  if (result === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+  if (result.length === 0) {
+    return response.status(404).json([])
+  }
+  return response.json(result)
+}
+
 async function update (request, response) {
   const { uuid } = request.params
   const { description } = request.body
@@ -265,6 +296,7 @@ export default {
   getByUsername,
   location,
   geoLocation,
+  getByUsername,
   update,
   remove,
   save,
