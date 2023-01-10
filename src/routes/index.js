@@ -30,6 +30,12 @@ routes.get(
   problemController.geoLocation
 )
 
+routes.get(
+  '/problems/username?',
+  validator.checkApiKey,
+  problemsValidation.getByUsername,
+  problemController.getByUsername
+)
 routes.delete(
   '/problems/:uuid',
   validator.checkApiKey,

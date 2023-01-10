@@ -5,7 +5,7 @@ async function getAll (limit, page) {
   console.log('[problemRepository]->getAll() limit, page-> ', limit, page)
   try {
     const problems = await Database.connection
-      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
+      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterUsername', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
       .from('problems')
       .where('status', '!=', 'deleted')
       .orderBy('createdAt', 'desc')
@@ -78,6 +78,23 @@ async function findByUUID (uuid, columns = ['*']) {
   }
 }
 
+async function findByUsername (user, columns = ['*'], limit, page) {
+  console.log('[problemRepository]->findByUsername() user-> ', user)
+  try {
+    const problem = await Database.connection
+      .select(columns)
+      .from('problems')
+      .where({ reporterUsername: user })
+      .orderBy('createdAt', 'desc')
+      .limit(parseInt(limit))
+      .offset((parseInt(page) - 1) * parseInt(limit))
+    return problem
+  } catch (error) {
+    console.log('[problemRepository]->findByUUID() error > ', error)
+    return 'code_error_db'
+  }
+}
+
 async function updateByUUID (uuid, description) {
   console.log('[problemRepository]->updateByUUID() uuid, description-> ', uuid, description)
   try {
@@ -120,7 +137,7 @@ async function findByNeighborhood (country, state, city, neighborhood, limit, pa
   console.log('[problemRepository]->findByNeighborhood() country, state, city, neighborhood-> ', country, state, city, neighborhood)
   try {
     const result = await Database.connection('problems')
-      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
+      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterUsername', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
       .where('status', '!=', 'deleted')
       .andWhere({ country })
       .andWhere({ state })
@@ -140,7 +157,7 @@ async function findByCity (country, state, city, limit, page) {
   console.log('[problemRepository]->findByCity() country, state, city, neighborhood-> ', country, state, city)
   try {
     const result = await Database.connection('problems')
-      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
+      .select('uuid', 'description', 'address', 'longitude', 'latitude', 'status', 'reporterUsername', 'reporterName', 'country', 'state', 'city', 'neighborhood', 'createdAt', 'updatedAt')
       .where('status', '!=', 'deleted')
       .andWhere({ country })
       .andWhere({ state })
@@ -155,6 +172,7 @@ async function findByCity (country, state, city, limit, page) {
   }
 }
 export default {
+  findByUsername,
   findByCity,
   findByNeighborhood,
   removeByUUID,
