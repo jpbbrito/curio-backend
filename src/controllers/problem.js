@@ -167,6 +167,10 @@ export async function remove (request, response) {
   const { uuid } = request.params
 
   const result = await problemRepository.removeByUUID(uuid)
+  if (result === 'deleted') {
+    return response.json({ message: 'Item já esta deletado!' })
+  }
+  
   if (result === 'code_error_db') {
     return response.status(503).json({ error: 'Deu erro tente novamente!' })
   }

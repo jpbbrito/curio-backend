@@ -10,6 +10,7 @@ export default function loadEnv () {
   }
 
   if (process.env.NODE_ENV === 'development') {
+    console.log('[loadEnv] - ')
     dotenv.config({ path: '.dev.env' })
   }
   return console.log('Enviroment loading!')
