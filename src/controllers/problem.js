@@ -263,6 +263,15 @@ async function getByUUID (request, response) {
   delete problem.id
   return response.json({ ...problem, photos })
 }
+async function cities (request, response) {
+  
+  const cities = await problemRepository.fetchCities()
+
+  if(cities === 'code_error_db') {
+    return response.status(503).json({ error: 'Deu erro tente novamente!' })
+  }
+  return response.json(cities)
+}
 
 export default {
   index,
@@ -272,5 +281,6 @@ export default {
   update,
   remove,
   save,
-  getByUUID
+  getByUUID,
+  cities
 }

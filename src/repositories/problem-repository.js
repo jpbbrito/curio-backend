@@ -238,6 +238,21 @@ async function findByCity(country, state, city, limit, page) {
   }
 }
 
+async function fetchCities() {
+  console.log('[problemRepository]->fetchCities() ')
+
+  try {
+    const result = await Database.connection('problems')
+      .distinct('city', 'state', 'country')
+      .where('city', '!=', 'SEM_REGISTRO')
+    
+      return result
+  } catch (error) {
+    console.log('[problemRepository]->fetcherrorCities() error', error)
+    return 'code_error_db'
+  }
+}
+
 export default {
   findByUsername,
   findByCity,
@@ -246,5 +261,6 @@ export default {
   updateByUUID,
   findByUUID,
   save,
-  getAll
+  getAll,
+  fetchCities
 }

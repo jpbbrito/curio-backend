@@ -17,6 +17,12 @@ routes.get(
 )
 
 routes.get(
+  '/problems/cities',
+  validator.checkApiKey,
+  problemController.cities
+)
+
+routes.get(
   '/problems/location?',
   validator.checkApiKey,
   problemsValidation.location,
