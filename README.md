@@ -1,37 +1,42 @@
-# Problemas na Cidade :construction: 
+# [Problemas na Cidade](https://projeto-curio.vercel.app/) :construction: 
 
 Esse é um projeto pessoal que visa criar uma solução para registro de problemas de infraestrutura nas cidades. 
-O projeto vai englobar todas as partes API, App Mobile e Web.
-Com o App Mobile é será possivel cadastrar o problema e adicionar fotos, localização e descrição. 
+O projeto vai englobar todas as partes API, Bot Telegram, App Mobile e Web.
+Com o App Mobile é será possivel cadastrar a solução por usuario cadastrados e adicionar fotos, localização e descrição. 
+O Bot Telegram é possivel registrar os problemas encontrados.
 Na aplicação Web funcionara como um *back office* onde o responsavel tomara as medidas e respondera ao problema.
 
-## [API](http://curiocity.duckdns.org/api/v1)
+## [API](https://projeto-curio.cyclic.app/api/v1)
 
-O backend em sua primeira versão pode ser acessado esse
-[aqui](https://github.com/jpbbrito/curio-backend). Esse foi implementamentado com o framework NestJS, documentação utilizei o Swagger e o banco de dados Oracle Autonomous Database. Toda hospedagem está no Oracle Cloud. 
-Link para a documentação da API [aqui](http://curiocity.duckdns.org/api/v1).
-## Web
+Esse foi implementamentado com o framework Express, KnexJS e o banco de dados PostgreSQL. A API esta hospedada está no [Cyclic.sh](cyclic.sh).
+## [Bot](https://t.me/projeto_curio_bot)
 
-O *back office* só começa após sera finalizado o App, sua construção sera feito com Angular.
+![Imagem](bot1.png)
+
+O Bot Telegram @projeto_curio_bot foi feito com a lib Telegraf.
+
+## [Web](https://projeto-curio.vercel.app/)
+
+O *front e backoffice*  sua construção esta sendo feita com React e Ionic UI, a hospedagem esta na [Vercel](https://vercel.com).
+
+![Imagem](front1.png)
+![Imagem](front2.png)
 
 ## App Mobile - DESCONTINUADO
 
-O Aplicativo está sendo construido com Ionic 5 com Capacitor. O sistema de mapas é o [MapxBox](https://www.mapbox.com/). Esse é esta em fase final de construção.
+O Aplicativo está sendo construido com Ionic 5 com Capacitor. O sistema de mapas é o [Google Maps]. Esse é esta em fase final de construção.
 
-![Imagem](image1.jpeg)
+
 
 ### Backend
 
 # Instalar pacotes
 ``npm install``
 
+# Executar localmente
 
-## Configurar DB
-
-## Configurar Env Oracle Autonomous Database
-
-``export TNS_ADMIN=$(pwd)/files/wallet``
+``npm run dev``
 
 ## Executar Migrations
 
-``npx knex migrate:latest``
+``npm run knex:<ENV>``

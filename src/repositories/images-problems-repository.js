@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto'
 import Database from '../../database/index.js'
 
-async function findByUUID (uuid, columns = ['*']) {
+export async function findByUUID (uuid, columns = ['*']) {
   console.log('[imagesProblemsRepository]->findByUUID() uuid > ', uuid)
   try {
     const image = await Database
@@ -19,7 +19,7 @@ async function findByUUID (uuid, columns = ['*']) {
   }
 }
 
-async function findByProblemId (problemId, columns = ['uuid', 'description']) {
+export async function findByProblemId (problemId, columns = ['uuid', 'description']) {
   console.log('[imagesProblemsRepository]->findByUUID() problemId > ', problemId)
   try {
     const datas = await Database
@@ -34,7 +34,7 @@ async function findByProblemId (problemId, columns = ['uuid', 'description']) {
   }
 }
 
-async function save (base64, description, problemId) {
+export async function save (base64, description, problemId) {
   const uuid = await randomUUID()
   console.log('[imagesProblemsRepository]->save()  description, problemId', description, problemId)
 
@@ -47,10 +47,4 @@ async function save (base64, description, problemId) {
     console.log('[imagesProblemsRepository]->save() error: ', error)
     return 'code_error_db'
   }
-}
-
-export default {
-  save,
-  findByProblemId,
-  findByUUID
 }

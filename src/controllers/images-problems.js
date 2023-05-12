@@ -1,7 +1,7 @@
-import problemRepository from '../repositories/problem-repository.js'
-import imagesProblemsRepository from '../repositories/images-problems-repository.js'
+import * as problemRepository from '../repositories/problem-repository.js'
+import * as imagesProblemsRepository from '../repositories/images-problems-repository.js'
 
-async function save (request, response) {
+export async function save (request, response) {
   const { base64, description } = request.body
   const { uuid } = request.params
   console.log('[imagesProblemsController.save()] ')
@@ -28,7 +28,7 @@ async function save (request, response) {
   return response.status(201).json({ message: 'Item created', uuid })
 }
 
-async function index (request, response) {
+export async function index (request, response) {
   const { uuid } = request.params
 
   const problem = await problemRepository.findByUUID(uuid)
@@ -47,7 +47,7 @@ async function index (request, response) {
   return response.json(photos)
 }
 
-async function getByUUID (request, response) {
+export async function getByUUID (request, response) {
   const { uuid } = request.params
 
   const photo = await imagesProblemsRepository.findByUUID(uuid, ['uuid', 'base64', 'description', 'createdAt', 'updatedAt'])
@@ -61,10 +61,4 @@ async function getByUUID (request, response) {
   }
 
   return response.json(photo)
-}
-
-export default {
-  getByUUID,
-  save,
-  index
 }

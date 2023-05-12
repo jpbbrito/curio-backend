@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto'
 import Database from '../../database/index.js'
 
-async function getAll(limit, page) {
+export async function getAll (limit, page) {
   console.log('[problemRepository]->getAll() limit, page-> ', limit, page)
   try {
     const problems = await Database.connection
@@ -18,7 +18,7 @@ async function getAll(limit, page) {
   }
 }
 
-async function save(
+export async function save (
   {
     description,
     address,
@@ -56,10 +56,9 @@ async function save(
           {
             createdAt: date.toISOString(),
             status: 'not_solved',
-            updatedAt: date.toISOString(),
+            updatedAt: date.toISOString()
           }
-        ])
-        ,
+        ]),
         dataJson,
         status: 'not_solved'
       })
@@ -70,7 +69,7 @@ async function save(
   }
 }
 
-async function findByUUID(uuid, columns = ['*']) {
+export async function findByUUID (uuid, columns = ['*']) {
   console.log('[problemRepository]->findByUUID() uuid-> ', uuid)
   try {
     const problem = await Database.connection
@@ -87,7 +86,7 @@ async function findByUUID(uuid, columns = ['*']) {
   }
 }
 
-async function findByUsername(user, columns = ['*'], limit, page) {
+export async function findByUsername (user, columns = ['*'], limit, page) {
   console.log('[problemRepository]->findByUsername() user-> ', user)
   try {
     const problem = await Database.connection
@@ -104,7 +103,7 @@ async function findByUsername(user, columns = ['*'], limit, page) {
   }
 }
 
-async function updateByUUID(uuid, description) {
+export async function updateByUUID (uuid, description) {
   console.log('[problemRepository]->updateByUUID() uuid, description-> ', uuid, description)
 
   try {
@@ -112,7 +111,7 @@ async function updateByUUID(uuid, description) {
     console.log('[problemRepository]->updateByUUID() problem-> ', problem)
 
     if (problem.statusHistory === null && problem.status === 'not_solved') {
-      let result = await Database.connection('problems')
+      const response = await Database.connection('problems')
         .where('uuid', '=', uuid)
         .update({
           description,
@@ -120,12 +119,12 @@ async function updateByUUID(uuid, description) {
             {
               createdAt: problem.createdAt,
               status: 'not_solved',
-              updatedAt: problem.createdAt,
+              updatedAt: problem.createdAt
             }
           ]),
           updatedAt: Database.connection.fn.now()
         })
-      if (result === 1) {
+      if (response === 1) {
         return true
       }
     }
@@ -146,7 +145,7 @@ async function updateByUUID(uuid, description) {
   }
 }
 
-async function removeByUUID(uuid) {
+export async function removeByUUID (uuid) {
   console.log('[problemRepository]->removeByUUID() uuid-> ', uuid)
   const date = new Date()
 
@@ -157,17 +156,17 @@ async function removeByUUID(uuid) {
       return 'deleted'
     }
 
-    if(problem.statusHistory === null) {
+    if (problem.statusHistory === null) {
       problem.statusHistory = [
         {
           createdAt: problem.createdAt,
           status: 'not_solved',
-          updatedAt: problem.createdAt,
+          updatedAt: problem.createdAt
         },
         {
           createdAt: date.toISOString(),
           status: 'deleted',
-          updatedAt: date.toISOString(),
+          updatedAt: date.toISOString()
         }
       ]
     } else {
@@ -175,12 +174,11 @@ async function removeByUUID(uuid) {
         {
           createdAt: date.toISOString(),
           status: 'deleted',
-          updatedAt: date.toISOString(),
+          updatedAt: date.toISOString()
         }
       )
     }
 
-    
     console.log('[problemRepository]->removeByUUID() problem-> ', problem)
     const result = await Database.connection('problems')
       .where('uuid', '=', uuid)
@@ -199,7 +197,7 @@ async function removeByUUID(uuid) {
   }
 }
 
-async function findByNeighborhood(country, state, city, neighborhood, limit, page) {
+export async function findByNeighborhood (country, state, city, neighborhood, limit, page) {
   console.log('[problemRepository]->findByNeighborhood() country, state, city, neighborhood-> ', country, state, city, neighborhood)
   try {
     const result = await Database.connection('problems')
@@ -219,7 +217,7 @@ async function findByNeighborhood(country, state, city, neighborhood, limit, pag
   }
 }
 
-async function findByCity(country, state, city, limit, page) {
+export async function findByCity (country, state, city, limit, page) {
   console.log('[problemRepository]->findByCity() country, state, city, neighborhood-> ', country, state, city)
   try {
     const result = await Database.connection('problems')
@@ -238,29 +236,17 @@ async function findByCity(country, state, city, limit, page) {
   }
 }
 
-async function fetchCities() {
+export async function fetchCities () {
   console.log('[problemRepository]->fetchCities() ')
 
   try {
     const result = await Database.connection('problems')
       .distinct('city', 'state', 'country')
       .where('city', '!=', 'SEM_REGISTRO')
-    
-      return result
+
+    return result
   } catch (error) {
     console.log('[problemRepository]->fetcherrorCities() error', error)
     return 'code_error_db'
   }
-}
-
-export default {
-  findByUsername,
-  findByCity,
-  findByNeighborhood,
-  removeByUUID,
-  updateByUUID,
-  findByUUID,
-  save,
-  getAll,
-  fetchCities
 }

@@ -1,13 +1,23 @@
 import express from 'express'
 
-import problemController from '../controllers/problem.js'
-import imagesProblemsController from '../controllers/images-problems.js'
+import * as problemController from '../controllers/problem.js'
+import * as imagesProblemsController from '../controllers/images-problems.js'
+import * as authController from '../controllers/auth.js'
+import * as usersController from '../controllers/users.js'
 
 import validator from '../middlewares/validator.js'
 import problemsValidation from '../middlewares/problems/problems-validation.js'
 import imagesProblemsValidation from '../middlewares/problems/images-problems-validation.js'
+import * as usersValidation from '../middlewares/users/users-validation.js'
+import * as authValidation from '../middlewares/users/auth-validation.js'
 
 const routes = express.Router()
+
+routes.post('/authenticate', validator.checkApiKey, authValidation.validationAuthenticate, authController.authenticate)
+routes.post('/forgot-password', validator.checkApiKey, authValidation.validationForgotPassword, authController.forgotPassword)
+routes.post('/reset-password', authValidation.validationResetPassword, authController.resetPassword)
+routes.post('/users', authValidation.authenticateToken, usersValidation.usersSaveValidation, usersController.save)
+routes.get('/users', authValidation.authenticateToken, usersController.getInfoUser)
 
 routes.get(
   '/problems',

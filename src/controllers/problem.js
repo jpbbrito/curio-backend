@@ -1,8 +1,8 @@
-import problemRepository from '../repositories/problem-repository.js'
-import imagesProblemsRepository from '../repositories/images-problems-repository.js'
+import * as problemRepository from '../repositories/problem-repository.js'
+import * as imagesProblemsRepository from '../repositories/images-problems-repository.js'
 import { getInfoByGeolocation } from '../services/google-maps.js'
 
-async function index (request, response) {
+export async function index (request, response) {
   const { limit, page } = request.query
 
   const problems = await problemRepository.getAll(limit, page)
@@ -12,7 +12,7 @@ async function index (request, response) {
   return response.json(problems)
 }
 
-async function getByUsername (request, response) {
+export async function getByUsername (request, response) {
   const { query: { user, limit, page } } = request
 
   const result = await problemRepository.findByUsername(user, [
@@ -42,7 +42,8 @@ async function getByUsername (request, response) {
   }
   return response.json(result)
 }
-async function location (request, response) {
+
+export async function location (request, response) {
   const { country, state, city, neighborhood, limit, page } = request.query
   console.log('[problemController]->location() request.query-> ', request.query)
 
@@ -66,7 +67,7 @@ async function location (request, response) {
   return response.status(400).json({ message: 'Deu erro tente novamente!' })
 }
 
-async function geoLocation (request, response) {
+export async function geoLocation (request, response) {
   const { query: { latitude, longitude, limit, page } } = request
   console.log('[problemController]->geoLocation() request.query-> ', request.query)
 
@@ -149,7 +150,7 @@ async function geoLocation (request, response) {
   return response.json(result)
 }
 
-async function update (request, response) {
+export async function update (request, response) {
   const { uuid } = request.params
   const { description } = request.body
 
@@ -170,7 +171,7 @@ export async function remove (request, response) {
   if (result === 'deleted') {
     return response.json({ message: 'Item já esta deletado!' })
   }
-  
+
   if (result === 'code_error_db') {
     return response.status(503).json({ error: 'Deu erro tente novamente!' })
   }
@@ -180,7 +181,7 @@ export async function remove (request, response) {
   return response.status(404).json({ message: 'Problem not found' })
 }
 
-async function save (request, response) {
+export async function save (request, response) {
   const { body } = request
 
   const mapsInfo = await getInfoByGeolocation(process.env.GOOGLE_API_KEY, body.latitude, body.longitude)
@@ -242,7 +243,7 @@ async function save (request, response) {
   return response.status(400).json({ message: 'Deu erro tente novamente!' })
 }
 
-async function getByUUID (request, response) {
+export async function getByUUID (request, response) {
   const { uuid } = request.params
 
   const problem = await problemRepository.findByUUID(uuid)
@@ -263,24 +264,11 @@ async function getByUUID (request, response) {
   delete problem.id
   return response.json({ ...problem, photos })
 }
-async function cities (request, response) {
-  
+export async function cities (request, response) {
   const cities = await problemRepository.fetchCities()
 
-  if(cities === 'code_error_db') {
+  if (cities === 'code_error_db') {
     return response.status(503).json({ error: 'Deu erro tente novamente!' })
   }
   return response.json(cities)
-}
-
-export default {
-  index,
-  getByUsername,
-  location,
-  geoLocation,
-  update,
-  remove,
-  save,
-  getByUUID,
-  cities
 }
