@@ -9,6 +9,7 @@ import {
   currentTimestamp
 } from './../repositories/auth.js'
 import transporterEmail from './../services/nodemailer.js'
+import Redis from '../../database/redis.js'
 
 export async function authenticate (request, response) {
   const { userName, password } = request.body
@@ -18,6 +19,10 @@ export async function authenticate (request, response) {
   }
   const user = await findUserByUsername(userName)
   const token = jwt.sign({ data: { userName, level: user.level } }, process.env.TOKEN_SECRET, { expiresIn: 30 * 60 })
+  const decoded = jwt.decode(token, { complete: true })
+  console.log('[auth.authenticate()] token', decoded)
+  await Redis.set(`jwt-username-${userName}`, decoded)
+
   return response.json({
     token
   })
@@ -98,7 +103,7 @@ export async function resetPassword (request, response) {
   console.log('[resetPassword] token now -> ', now)
   if (!okay) {
     return response.status(403).json({
-      message: 'Token expirado'
+      message: 'Token JWT expirado!'
     })
   }
 

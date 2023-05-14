@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "NODE_ENV=development jest --runInBand",
-    "predev": "npm run db:dev:up",
+    "predev": "npm run db:dev:up && npm run redis:dev:up",
     "dev": "NODE_ENV=development npx nodemon app.js",
     "knex:dev": "NODE_ENV=development npx knex",
     "knex:local": "NODE_ENV=local npx knex",
@@ -15,21 +15,24 @@
     "local:down": "docker compose --env-file .local.env down",
     "start": "node app.js",
     "db:dev:up": "docker compose --env-file .dev.env up db -d",
-    "db:dev:down": "docker compose --env-file .dev.env down db"
+    "db:dev:down": "docker compose --env-file .dev.env down db",
+    "redis:dev:up": "docker compose --env-file .dev.env up cache -d",
+    "redis:dev:down": "docker compose --env-file .dev.env down cache"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.2.1",
-    "bcrypt": "^5.1.0",
+    "axios": "1.2.1",
+    "bcrypt": "5.1.0",
     "cors": "2.8.5",
     "dotenv": "8.2.0",
     "express": "4.17.1",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "9.0.0",
     "knex": "0.95.15",
-    "nodemailer": "^6.9.1",
-    "pg": "8.8.0"
+    "nodemailer": "6.9.1",
+    "pg": "8.8.0",
+    "redis": "4.6.6"
   },
   "devDependencies": {
     "eslint": "^8.29.0",

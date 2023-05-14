@@ -1,6 +1,7 @@
 import * as problemRepository from '../repositories/problem-repository.js'
 import * as imagesProblemsRepository from '../repositories/images-problems-repository.js'
 import { getInfoByGeolocation } from '../services/google-maps.js'
+import Redis from './../../database/redis.js'
 
 export async function index (request, response) {
   const { limit, page } = request.query
@@ -265,8 +266,12 @@ export async function getByUUID (request, response) {
   return response.json({ ...problem, photos })
 }
 export async function cities (request, response) {
+  const cache = await Redis.get('problems-cities')
+  if (cache) {
+    return response.json(cache)
+  }
   const cities = await problemRepository.fetchCities()
-
+  await Redis.set('problems-cities', cities, 60)
   if (cities === 'code_error_db') {
     return response.status(503).json({ error: 'Deu erro tente novamente!' })
   }

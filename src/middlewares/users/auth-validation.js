@@ -7,7 +7,11 @@ export async function authenticateToken (request, response, next) {
   if (token == null) return response.status(401).json({ error: 'token invalido!' })
 
   jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
-    if (err) return response.status(401).json({ error: 'token invalido!' })
+    if (err) {
+      console.log('jwt.decode() -> err ', err)
+      console.log('jwt.decode() -> ', jwt.decode(token, { complete: true }))
+      return response.status(401).json({ error: 'token invalido!' })
+    }
     console.log('jwt.verify() -> ', data)
     request.authenticatedUser = {
       ...data.data

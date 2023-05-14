@@ -15,7 +15,7 @@ const routes = express.Router()
 
 routes.post('/authenticate', validator.checkApiKey, authValidation.validationAuthenticate, authController.authenticate)
 routes.post('/forgot-password', validator.checkApiKey, authValidation.validationForgotPassword, authController.forgotPassword)
-routes.post('/reset-password', authValidation.validationResetPassword, authController.resetPassword)
+routes.post('/reset-password', validator.checkApiKey, authValidation.validationResetPassword, authController.resetPassword)
 routes.post('/users', authValidation.authenticateToken, usersValidation.usersSaveValidation, usersController.save)
 routes.get('/users', authValidation.authenticateToken, usersController.getInfoUser)
 
