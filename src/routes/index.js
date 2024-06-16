@@ -5,9 +5,9 @@ import * as imagesProblemsController from '../controllers/images-problems.js'
 import * as authController from '../controllers/auth.js'
 import * as usersController from '../controllers/users.js'
 
-import validator from '../middlewares/validator.js'
-import problemsValidation from '../middlewares/problems/problems-validation.js'
-import imagesProblemsValidation from '../middlewares/problems/images-problems-validation.js'
+import * as validator from '../middlewares/validator.js'
+import * as problemsValidation from '../middlewares/problems/problems-validation.js'
+import * as imagesProblemsValidation from '../middlewares/problems/images-problems-validation.js'
 import * as usersValidation from '../middlewares/users/users-validation.js'
 import * as authValidation from '../middlewares/users/auth-validation.js'
 
