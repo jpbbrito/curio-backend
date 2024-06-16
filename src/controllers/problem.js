@@ -267,7 +267,7 @@ export async function getByUUID (request, response) {
 }
 export async function cities (request, response) {
   const cache = await Redis.get('problems-cities')
-  if (cache !== 'error_redis' || cache === null) {
+  if (cache !== 'error_redis' || cache !== null) {
     return response.json(cache)
   }
   const cities = await problemRepository.fetchCities()
