@@ -1,5 +1,5 @@
 
-function checkApiKey (request, response, next) {
+export function checkApiKey (request, response, next) {
   const apiKeys = process.env.API_KEYS.split(',')
 
   console.log('[checkApiKey] headers: ', request.headers)
@@ -9,8 +9,4 @@ function checkApiKey (request, response, next) {
     return next()
   }
   return response.status(401).json({ error: 'API_KEY invalid.' })
-}
-
-export default {
-  checkApiKey
 }

@@ -1,4 +1,4 @@
-function save (request, response, next) {
+export function save (request, response, next) {
   const {
     base64
   } = request.body
@@ -20,7 +20,7 @@ function save (request, response, next) {
   return next()
 }
 
-function getImages (request, response, next) {
+export function getImages (request, response, next) {
   const {
     uuid
   } = request.params
@@ -31,9 +31,4 @@ function getImages (request, response, next) {
     })
   }
   return next()
-}
-
-export default {
-  save,
-  getImages
 }

@@ -1,4 +1,4 @@
-function index (request, response, next) {
+export function index (request, response, next) {
   const { limit, page } = request.query
   if (!limit || limit.length === 0) {
     request.query.limit = 10
@@ -9,7 +9,7 @@ function index (request, response, next) {
   return next()
 }
 
-function location (request, response, next) {
+export function location (request, response, next) {
   const { country, state, city, limit, page } = request.query
   console.log('location -> ', request.query)
 
@@ -29,7 +29,7 @@ function location (request, response, next) {
   return next()
 }
 
-function geoLocation (request, response, next) {
+export function geoLocation (request, response, next) {
   const { longitude, latitude, limit, page } = request.query
   console.log('location -> ', request.query)
 
@@ -49,7 +49,7 @@ function geoLocation (request, response, next) {
   return next()
 }
 
-function getByUsername (request, response, next) {
+export function getByUsername (request, response, next) {
   const { user, limit, page } = request.query
   console.log('location -> ', request.query)
 
@@ -68,7 +68,7 @@ function getByUsername (request, response, next) {
 
   return next()
 }
-function remove (request, response, next) {
+export function remove (request, response, next) {
   const { uuid } = request.params
   if (!uuid) {
     return response.status(400).json({
@@ -78,7 +78,7 @@ function remove (request, response, next) {
   return next()
 }
 
-function update (request, response, next) {
+export function update (request, response, next) {
   const { description } = request.body
   if (!request.params.uuid || request.params.uuid === 'null') {
     return response.status(400).json({
@@ -91,7 +91,7 @@ function update (request, response, next) {
   return next()
 }
 
-function save (request, response, next) {
+export function save (request, response, next) {
   const {
     description,
     address,
@@ -129,12 +129,3 @@ function save (request, response, next) {
   return next()
 }
 
-export default {
-  getByUsername,
-  location,
-  geoLocation,
-  save,
-  remove,
-  index,
-  update
-}
