@@ -4,12 +4,13 @@ export default class Redis {
 
     static connection
 
-    static async createConnection({ url, username, password }) {
+    static async createConnection({ url,port, username, password }) {
 
         console.log('[Redis] createConnection() url, username, password:', url, username, password);
+        const url_redis = url + ':' + port
         try {
             this.connection = await createClient({
-                url,
+                url_redis,
                 username,
                 password
             });

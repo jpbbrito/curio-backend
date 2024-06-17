@@ -266,10 +266,14 @@ export async function getByUUID (request, response) {
   return response.json({ ...problem, photos })
 }
 export async function cities (request, response) {
+  
   const cache = await Redis.get('problems-cities')
-  if (cache !== 'error_redis' || cache !== null) {
+  console.log('[problem->cities]: ', cache == null)
+  if (cache !== 'error_redis' && cache !== null) {
+    console.log('[problem->cities]: ', cache !== null)
     return response.json(cache)
   }
+  
   const cities = await problemRepository.fetchCities()
   await Redis.set('problems-cities', cities, 60)
   if (cities === 'code_error_db') {
